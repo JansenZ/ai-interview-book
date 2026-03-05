@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 知识体系库 - 前端开发面试冲刺</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+            background: #f5f5f5;
+            color: #333;
+            line-height: 1.8;
+        }
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        .container { max-width: 900px; margin: 0 auto; padding: 2rem; }
+        
+        /* 目录 */
+        .toc {
+            background: #fff;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        .toc h2 {
+            color: #667eea;
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+        }
+        .toc-section {
+            margin-bottom: 2rem;
+        }
+        .toc-section h3 {
+            color: #764ba2;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+        .toc-list {
+            list-style: none;
+        }
+        .toc-list li {
+            padding: 0.75rem 1rem;
+            margin: 0.5rem 0;
+            background: #f8f9fa;
+            border-radius: 6px;
+            border-left: 4px solid #667eea;
+            transition: all 0.2s;
+        }
+        .toc-list li:hover {
+            background: #667eea;
+            color: #fff;
+            transform: translateX(8px);
+        }
+        .toc-list a {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+        .toc-list .completed {
+            border-left-color: #2ecc71;
+        }
+        .toc-list .completed:hover {
+            background: #2ecc71;
+        }
+        .toc-list .pending {
+            border-left-color: #f39c12;
+            opacity: 0.7;
+        }
+        
+        /* 进度条 */
+        .progress {
+            background: #fff;
+            padding: 1.5rem 2rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        .progress-bar {
+            background: #e0e0e0;
+            border-radius: 10px;
+            height: 24px;
+            overflow: hidden;
+            margin-top: 1rem;
+        }
+        .progress-fill {
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            height: 100%;
+            border-radius: 10px;
+            transition: width 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+        
+        /* 章节内容 */
+        .chapter {
+            background: #fff;
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        .chapter h2 {
+            color: #667eea;
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 0.5rem;
+        }
+        .chapter h3 {
+            color: #764ba2;
+            margin: 1.5rem 0 1rem;
+            font-size: 1.4rem;
+        }
+        .chapter p {
+            margin-bottom: 1rem;
+        }
+        .chapter code {
+            background: #f8f9fa;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-family: "SF Mono", Monaco, "Cascadia Code", monospace;
+            font-size: 0.9em;
+        }
+        .chapter pre {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 1.5rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+        }
+        .chapter pre code {
+            background: none;
+            padding: 0;
+            color: inherit;
+        }
+        .chapter ul, .chapter ol {
+            margin: 1rem 0 1rem 2rem;
+        }
+        .chapter li {
+            margin: 0.5rem 0;
+        }
+        .chapter blockquote {
+            border-left: 4px solid #667eea;
+            padding-left: 1.5rem;
+            margin: 1.5rem 0;
+            color: #555;
+            background: #f8f9fa;
+            padding: 1rem 1.5rem;
+            border-radius: 0 8px 8px 0;
+        }
+        .chapter table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+        .chapter th, .chapter td {
+            border: 1px solid #e0e0e0;
+            padding: 0.75rem 1rem;
+            text-align: left;
+        }
+        .chapter th {
+            background: #667eea;
+            color: #fff;
+        }
+        .chapter tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+        
+        /* 标签 */
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            margin-left: 0.5rem;
+        }
+        .badge-done {
+            background: #2ecc71;
+            color: #fff;
+        }
+        .badge-pending {
+            background: #f39c12;
+            color: #fff;
+        }
+        
+        /* 底部 */
+        .footer {
+            text-align: center;
+            padding: 2rem;
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 { font-size: 1.8rem; }
+            .container { padding: 1rem; }
+            .chapter { padding: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <h1>🤖 AI 知识体系库</h1>
+        <p>前端开发面试冲刺指南 · 3 个月从零基础到面试通关</p>
+    </header>
+    
+    <div class="container">
+        <!-- 进度 -->
+        <div class="progress">
+            <h2>📊 学习进度</h2>
+            <div class="progress-bar">
+                <div class="progress-fill" style="width: 29%">5 / 17 章</div>
+            </div>
+            <p style="margin-top: 1rem; color: #666;">已完成：5 章 | 待完成：12 章</p>
+        </div>
+        
+        <!-- 目录 -->
+        <div class="toc">
+            <h2>📚 目录</h2>
+            
+            <div class="toc-section">
+                <h3>第一部分：AI 基础扫盲 ✅</h3>
+                <ul class="toc-list">
+                    <li class="completed"><a href="#chapter01">第 1 章：AI 术语速成</a></li>
+                    <li class="completed"><a href="#chapter02">第 2 章：ML vs DL vs LLM</a></li>
+                    <li class="completed"><a href="#chapter03">第 3 章：数学基础（只学有用的）</a></li>
+                    <li class="completed"><a href="#chapter04">第 4 章：AI 发展史和关键里程碑</a></li>
+                </ul>
+            </div>
+            
+            <div class="toc-section">
+                <h3>第二部分：大模型应用开发 🚧</h3>
+                <ul class="toc-list">
+                    <li class="completed"><a href="#chapter05">第 5 章：Prompt Engineering 入门</a></li>
+                    <li class="pending"><a href="#chapter06">第 6 章：调用大模型 API</a></li>
+                    <li class="pending"><a href="#chapter07">第 7 章：RAG 检索增强生成</a></li>
+                    <li class="pending"><a href="#chapter08">第 8 章：Function Calling</a></li>
+                    <li class="pending"><a href="#chapter09">第 9 章：AI Agent 基础</a></li>
+                </ul>
+            </div>
+            
+            <div class="toc-section">
+                <h3>第三部分：前端 AI 工程化 📦</h3>
+                <ul class="toc-list">
+                    <li class="pending"><a href="#chapter10">第 10 章：前端 AI 技术栈</a></li>
+                    <li class="pending"><a href="#chapter11">第 11 章：浏览器端 AI 推理</a></li>
+                    <li class="pending"><a href="#chapter12">第 12 章：AI 应用架构设计</a></li>
+                    <li class="pending"><a href="#chapter13">第 13 章：性能优化和成本控制</a></li>
+                </ul>
+            </div>
+            
+            <div class="toc-section">
+                <h3>第四部分：面试冲刺 🎯</h3>
+                <ul class="toc-list">
+                    <li class="pending"><a href="#chapter14">第 14 章：AI 面试题库（100 道）</a></li>
+                    <li class="pending"><a href="#chapter15">第 15 章：项目包装技巧</a></li>
+                    <li class="pending"><a href="#chapter16">第 16 章：简历 AI 技能写法</a></li>
+                    <li class="pending"><a href="#chapter17">第 17 章：大厂 AI 面试真题</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- 章节内容预览 -->
+        <div class="chapter" id="chapter01">
+            <h2>第 1 章：AI 术语速成 <span class="badge badge-done">✅</span></h2>
+            <p><strong>目标</strong>：看完这章，能听懂 AI 工程师在说什么</p>
+            <h3>核心术语表</h3>
+            <p><strong>AI / ML / DL / LLM 的关系</strong>：</p>
+            <pre>AI (人工智能)
+├── ML (机器学习)
+│   ├── DL (深度学习)
+│   │   └── LLM (大语言模型)
+│   ├── 传统机器学习 (SVM、决策树等)
+│   └── 强化学习
+└── 规则系统 (非学习)</pre>
+            <p><strong>一句话解释</strong>：</p>
+            <ul>
+                <li><strong>AI</strong>：让机器模拟人类智能的总称</li>
+                <li><strong>ML</strong>：让机器从数据中学习，而不是硬编码规则</li>
+                <li><strong>DL</strong>：用神经网络（多层）的机器学习</li>
+                <li><strong>LLM</strong>：用 Transformer 架构的超大规模语言模型</li>
+            </ul>
+        </div>
+        
+        <div class="chapter" id="chapter02">
+            <h2>第 2 章：机器学习 vs 深度学习 vs 大模型 <span class="badge badge-done">✅</span></h2>
+            <p><strong>目标</strong>：搞懂这三者的区别，面试不再混淆</p>
+            <h3>核心思想对比</h3>
+            <p><strong>传统编程</strong>：规则 + 数据 → 答案</p>
+            <p><strong>机器学习</strong>：数据 + 答案 → 规则</p>
+            <h3>面试高频问题</h3>
+            <blockquote>
+                <strong>Q: 机器学习、深度学习、大模型的区别？</strong><br>
+                从属关系：AI > ML > DL > LLM<br><br>
+                机器学习是从数据中学习规则，而不是人工写规则。<br>
+                深度学习是机器学习的一种，用多层神经网络，能自动学习特征。<br>
+                大模型是深度学习的一种，基于 Transformer 架构，参数规模超大（几百亿+）。
+            </blockquote>
+        </div>
+        
+        <div class="chapter" id="chapter03">
+            <h2>第 3 章：前端需要知道的 AI 数学基础 <span class="badge badge-done">✅</span></h2>
+            <p><strong>目标</strong>：只学面试和实际工作需要的数学，不浪费时间</p>
+            <h3>学习原则</h3>
+            <p>❌ 不需要：手推反向传播公式、证明凸优化定理、计算复杂的矩阵分解</p>
+            <p>✅ 需要知道：核心概念的直观理解、面试能回答基本概念题、实际工作中能看懂文档</p>
+            <h3>核心概念</h3>
+            <ul>
+                <li><strong>向量</strong>：一组数字，表示事物的特征（如文本 Embedding）</li>
+                <li><strong>余弦相似度</strong>：计算两个向量的相似度，用于 RAG 检索</li>
+                <li><strong>梯度下降</strong>：训练模型的优化算法，想象下山</li>
+            </ul>
+        </div>
+        
+        <div class="chapter" id="chapter04">
+            <h2>第 4 章：AI 发展史和关键里程碑 <span class="badge badge-done">✅</span></h2>
+            <p><strong>目标</strong>：面试时能聊 AI 发展，展示你对行业的了解</p>
+            <h3>关键时间点</h3>
+            <ul>
+                <li><strong>1950</strong>：图灵测试提出</li>
+                <li><strong>1956</strong>：达特茅斯会议，"人工智能"一词诞生</li>
+                <li><strong>2012</strong>：AlexNet 赢得 ImageNet，深度学习崛起</li>
+                <li><strong>2017</strong>：Transformer 论文发表</li>
+                <li><strong>2022.11</strong>：ChatGPT 发布，引爆全球</li>
+                <li><strong>2023</strong>：多模态元年（GPT-4V）</li>
+                <li><strong>2024</strong>：Agent 元年</li>
+            </ul>
+        </div>
+        
+        <div class="chapter" id="chapter05">
+            <h2>第 5 章：Prompt Engineering 入门 <span class="badge badge-done">✅</span></h2>
+            <p><strong>目标</strong>：写出高质量的提示词，让 AI 输出你想要的结果</p>
+            <h3>好 Prompt 公式</h3>
+            <pre>好 Prompt = 角色 + 任务 + 上下文 + 要求 + 示例（可选）</pre>
+            <h3>常用技巧</h3>
+            <ul>
+                <li><strong>Zero-Shot</strong>：不给示例，直接让 AI 做</li>
+                <li><strong>Few-Shot</strong>：给几个示例，让 AI 模仿</li>
+                <li><strong>Chain of Thought</strong>：让 AI 一步步思考，展示推理过程</li>
+                <li><strong>Role Playing</strong>：给 AI 设定特定角色</li>
+                <li><strong>Output Formatting</strong>：明确要求输出格式</li>
+            </ul>
+        </div>
+    </div>
+    
+    <footer class="footer">
+        <p>📖 完整内容请查看 GitHub 仓库：<a href="https://github.com/JansenZ/ai-interview-book" target="_blank">JansenZ/ai-interview-book</a></p>
+        <p>🤙 持续更新中... 最后更新：2026-03-05</p>
+    </footer>
+    
+    <script>
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
