@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 面试指南 - 章节阅读</title>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .header {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            text-align: center;
+            color: #fff;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .header h1 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        .header-nav {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 0.5rem;
+        }
+        .header-nav a {
+            color: #fff;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            background: rgba(255,255,255,0.2);
+            transition: all 0.2s;
+        }
+        .header-nav a:hover {
+            background: rgba(255,255,255,0.3);
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 2rem;
+        }
+        
+        /* 侧边栏目录 */
+        .toc-sidebar {
+            background: #fff;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            height: fit-content;
+            position: sticky;
+            top: 6rem;
+            max-height: calc(100vh - 8rem);
+            overflow-y: auto;
+        }
+        .toc-sidebar h3 {
+            color: #667eea;
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #667eea;
+        }
+        .toc-list {
+            list-style: none;
+        }
+        .toc-list li {
+            margin: 0.5rem 0;
+        }
+        .toc-list a {
+            display: block;
+            padding: 0.4rem 0.6rem;
+            border-radius: 4px;
+            text-decoration: none;
+            color: #555;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+            border-left: 2px solid transparent;
+        }
+        .toc-list a:hover {
+            background: #f0f0f0;
+            border-left-color: #667eea;
+        }
+        .toc-list .toc-h2 {
+            padding-left: 0;
+            font-weight: 600;
+            color: #333;
+        }
+        .toc-list .toc-h3 {
+            padding-left: 1rem;
+            font-size: 0.85rem;
+        }
+        .toc-list .toc-h4 {
+            padding-left: 1.5rem;
+            font-size: 0.8rem;
+            color: #666;
+        }
+        
+        /* 主内容区 */
+        .content-wrapper {
+            background: #fff;
+            border-radius: 12px;
+            padding: 2.5rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+        }
+        .markdown-body {
+            font-size: 1rem;
+            line-height: 1.8;
+            color: #333;
+        }
+        .markdown-body h1 {
+            font-size: 2rem;
+            color: #667eea;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #667eea;
+        }
+        .markdown-body h2 {
+            font-size: 1.6rem;
+            color: #764ba2;
+            margin: 2rem 0 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        .markdown-body h3 {
+            font-size: 1.3rem;
+            color: #667eea;
+            margin: 1.5rem 0 0.8rem;
+        }
+        .markdown-body h4 {
+            font-size: 1.1rem;
+            color: #555;
+            margin: 1.2rem 0 0.6rem;
+        }
+        .markdown-body p {
+            margin: 1rem 0;
+            text-align: justify;
+        }
+        .markdown-body ul, .markdown-body ol {
+            margin: 1rem 0;
+            padding-left: 2rem;
+        }
+        .markdown-body li {
+            margin: 0.5rem 0;
+        }
+        .markdown-body code {
+            background: #f6f8fa;
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-size: 0.9em;
+            font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+            color: #e83e8c;
+        }
+        .markdown-body pre {
+            background: #f6f8fa;
+            padding: 1.5rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+            border: 1px solid #e0e0e0;
+        }
+        .markdown-body pre code {
+            background: transparent;
+            padding: 0;
+            color: #333;
+        }
+        .markdown-body blockquote {
+            border-left: 4px solid #667eea;
+            padding-left: 1rem;
+            margin: 1.5rem 0;
+            color: #666;
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 0 8px 8px 0;
+        }
+        .markdown-body table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+        .markdown-body th, .markdown-body td {
+            border: 1px solid #e0e0e0;
+            padding: 0.75rem;
+            text-align: left;
+        }
+        .markdown-body th {
+            background: #667eea;
+            color: #fff;
+            font-weight: 600;
+        }
+        .markdown-body tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+        .markdown-body a {
+            color: #667eea;
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.2s;
+        }
+        .markdown-body a:hover {
+            border-bottom-color: #667eea;
+        }
+        .markdown-body img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+        .markdown-body hr {
+            border: none;
+            border-top: 2px solid #e0e0e0;
+            margin: 2rem 0;
+        }
+        
+        /* 加载状态 */
+        .loading {
+            text-align: center;
+            padding: 3rem;
+            color: #666;
+        }
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid #e0e0e0;
+            border-top-color: #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* 错误提示 */
+        .error {
+            text-align: center;
+            padding: 3rem;
+            color: #dc3545;
+            background: #fff5f5;
+            border-radius: 8px;
+            border: 1px solid #fed7d7;
+        }
+        
+        /* 导航按钮 */
+        .chapter-nav {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid #e0e0e0;
+        }
+        .chapter-nav a {
+            padding: 0.75rem 1.5rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            transition: transform 0.2s;
+        }
+        .chapter-nav a:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+        .chapter-nav a.disabled {
+            opacity: 0.5;
+            pointer-events: none;
+        }
+        
+        /* 响应式 */
+        @media (max-width: 1024px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+            .toc-sidebar {
+                position: static;
+                max-height: none;
+            }
+        }
+        @media (max-width: 768px) {
+            .header h1 { font-size: 1.4rem; }
+            .container { padding: 1rem; }
+            .content-wrapper { padding: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <h1>🤖 AI 面试指南</h1>
+        <div class="header-nav">
+            <a href="index.html">📚 返回目录</a>
+            <a href="https://github.com/JansenZ/ai-interview-book" target="_blank">⭐ GitHub</a>
+        </div>
+    </header>
+    
+    <div class="container">
+        <!-- 侧边栏目录 -->
+        <aside class="toc-sidebar">
+            <h3>📑 本章目录</h3>
+            <ul class="toc-list" id="toc-list">
+                <li>加载中...</li>
+            </ul>
+        </aside>
+        
+        <!-- 主内容区 -->
+        <main class="content-wrapper">
+            <div id="content">
+                <div class="loading">
+                    <div class="loading-spinner"></div>
+                    <p>正在加载章节内容...</p>
+                </div>
+            </div>
+            
+            <!-- 章节导航 -->
+            <div class="chapter-nav" id="chapter-nav">
+                <a href="#" id="prev-chapter" class="disabled">← 上一章</a>
+                <a href="#" id="next-chapter">下一章 →</a>
+            </div>
+        </main>
+    </div>
+    
+    <script>
+        // 章节配置
+        const chapters = [
+            { id: '01', title: 'AI 术语详解', file: '01-ai-terminology.md' },
+            { id: '02', title: '机器学习基础', file: '02-machine-learning-basics.md' },
+            { id: '03', title: '数学基础', file: '03-math-basics.md' },
+            { id: '04', title: 'AI 发展史', file: '04-ai-history.md' },
+            { id: '05', title: 'Prompt Engineering', file: '05-prompt-engineering.md' },
+            { id: '06', title: 'LLM API 调用', file: '06-llm-api.md' },
+            { id: '07', title: 'RAG 技术', file: '07-rag.md' },
+            { id: '08', title: '模型微调', file: '08-fine-tuning.md' },
+            { id: '09', title: 'AI Agent', file: '09-ai-agent.md' },
+            { id: '10', title: '总结与展望', file: '10-conclusion.md' }
+        ];
+        
+        // 配置 marked
+        marked.setOptions({
+            highlight: function(code, lang) {
+                if (lang && hljs.getLanguage(lang)) {
+                    return hljs.highlight(code, { language: lang }).value;
+                }
+                return hljs.highlightAuto(code).value;
+            },
+            breaks: false,
+            gfm: true
+        });
+        
+        // 获取当前章节
+        function getCurrentChapter() {
+            const params = new URLSearchParams(window.location.search);
+            return params.get('chapter') || '01';
+        }
+        
+        // 获取当前章节索引
+        function getCurrentChapterIndex(chapterId) {
+            return chapters.findIndex(c => c.id === chapterId);
+        }
+        
+        // 加载 Markdown 文件
+        async function loadChapter(chapterId) {
+            const index = getCurrentChapterIndex(chapterId);
+            if (index === -1) {
+                document.getElementById('content').innerHTML = `
+                    <div class="error">
+                        <h2>😕 章节不存在</h2>
+                        <p>找不到章节：${chapterId}</p>
+                        <a href="index.html" style="color: #667eea; margin-top: 1rem; display: inline-block;">返回目录</a>
+                    </div>
+                `;
+                return;
+            }
+            
+            const chapter = chapters[index];
+            const filePath = `chapters/${chapter.file}`;
+            
+            try {
+                const response = await fetch(filePath);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const markdown = await response.text();
+                
+                // 渲染 Markdown
+                const html = marked.parse(markdown);
+                document.getElementById('content').innerHTML = html;
+                
+                // 更新页面标题
+                document.title = `第${chapter.id}章：${chapter.title} - AI 面试指南`;
+                
+                // 生成目录
+                generateTOC();
+                
+                // 更新章节导航
+                updateChapterNav(index);
+                
+                // 代码高亮
+                document.querySelectorAll('pre code').forEach((block) => {
+                    hljs.highlightElement(block);
+                });
+                
+                // 滚动到顶部
+                window.scrollTo(0, 0);
+                
+            } catch (error) {
+                console.error('加载章节失败:', error);
+                document.getElementById('content').innerHTML = `
+                    <div class="error">
+                        <h2>😕 加载失败</h2>
+                        <p>无法加载章节内容：${chapter.title}</p>
+                        <p style="margin-top: 0.5rem; font-size: 0.9rem; color: #666;">错误信息：${error.message}</p>
+                        <a href="index.html" style="color: #667eea; margin-top: 1rem; display: inline-block;">返回目录</a>
+                    </div>
+                `;
+            }
+        }
+        
+        // 生成目录
+        function generateTOC() {
+            const content = document.getElementById('content');
+            const headings = content.querySelectorAll('h2, h3, h4');
+            const tocList = document.getElementById('toc-list');
+            
+            if (headings.length === 0) {
+                tocList.innerHTML = '<li>暂无目录</li>';
+                return;
+            }
+            
+            tocList.innerHTML = '';
+            headings.forEach((heading, index) => {
+                // 生成 ID
+                const id = `heading-${index}`;
+                heading.id = id;
+                
+                // 确定层级
+                let levelClass = 'toc-h2';
+                if (heading.tagName === 'H3') levelClass = 'toc-h3';
+                else if (heading.tagName === 'H4') levelClass = 'toc-h4';
+                
+                // 创建目录项
+                const li = document.createElement('li');
+                const a = document.createElement('a');
+                a.href = `#${id}`;
+                a.className = levelClass;
+                a.textContent = heading.textContent;
+                li.appendChild(a);
+                tocList.appendChild(li);
+            });
+        }
+        
+        // 更新章节导航
+        function updateChapterNav(currentIndex) {
+            const prevBtn = document.getElementById('prev-chapter');
+            const nextBtn = document.getElementById('next-chapter');
+            
+            // 上一章
+            if (currentIndex > 0) {
+                prevBtn.href = `chapter-viewer.html?chapter=${chapters[currentIndex - 1].id}`;
+                prevBtn.classList.remove('disabled');
+            } else {
+                prevBtn.href = '#';
+                prevBtn.classList.add('disabled');
+            }
+            
+            // 下一章
+            if (currentIndex < chapters.length - 1) {
+                nextBtn.href = `chapter-viewer.html?chapter=${chapters[currentIndex + 1].id}`;
+                nextBtn.classList.remove('disabled');
+            } else {
+                nextBtn.href = '#';
+                nextBtn.classList.add('disabled');
+                nextBtn.textContent = '🎉 已完结';
+            }
+        }
+        
+        // 页面加载
+        document.addEventListener('DOMContentLoaded', () => {
+            const chapterId = getCurrentChapter();
+            loadChapter(chapterId);
+        });
+        
+        // 监听 hash 变化（用于目录跳转）
+        window.addEventListener('hashchange', () => {
+            // 平滑滚动
+            const hash = window.location.hash;
+            if (hash) {
+                const element = document.querySelector(hash);
+                if (element) {
+                    element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            }
+        });
+    </script>
+</body>
+</html>
